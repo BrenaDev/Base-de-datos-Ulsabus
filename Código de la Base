@@ -1,0 +1,140 @@
+mysql -u root -p
+
+CREATE DATABASE ulsabus;
+
+USE ulsabus;
+
+
+CREATE TABLE Conductores (
+ID_Conductor INT AUTO_INCREMENT PRIMARY KEY,    
+Nombre_Condu VARCHAR(45) NOT NULL,
+Paterno_Condu VARCHAR(45) NOT NULL,
+Materno_Condu VARCHAR(45) NOT NULL
+);
+
+
+CREATE TABLE Autobuses (
+ID_Autobuses INT AUTO_INCREMENT PRIMARY KEY,    
+Marca VARCHAR(45) NOT NULL,
+Modelo VARCHAR(45) NOT NULL,
+Estado_Autobus VARCHAR(45) NOT NULL,
+Matricula_Autobus VARCHAR(45) NOT NULL
+);
+
+
+CREATE TABLE Rutas (
+ID_Ruta INT AUTO_INCREMENT PRIMARY KEY,    
+Origen VARCHAR(45) NOT NULL,
+Destino VARCHAR(45) NOT NULL,
+Tipo VARCHAR(45) NOT NULL
+);
+
+
+CREATE TABLE Alumnos (
+ID_Alumno INT AUTO_INCREMENT PRIMARY KEY,    
+Nombre_Alu VARCHAR(45) NOT NULL,
+Paterno_Alu VARCHAR(45) NOT NULL,
+Materno_Alu VARCHAR(45) NOT NULL,
+Numero_contacto VARCHAR(45) NOT NULL,
+Matricula VARCHAR(45) NOT NULL
+);
+
+CREATE TABLE detalle_viaje (
+ID_detalle_viaje INT AUTO_INCREMENT PRIMARY KEY,    
+Hora_Salida VARCHAR(45) NOT NULL,
+Hora_Llegada VARCHAR(45) NOT NULL
+);
+
+CREATE TABLE Viajes_Escolares (
+ID_Viaje INT AUTO_INCREMENT PRIMARY KEY,    
+Precio INT NOT NULL,
+Id_Alumno INT NOT NULL,
+Id_Ruta INT NOT NULL,
+Id_Conductor INT NOT null,
+Id_Autobuses INT NOT NULL,
+Id_detalle_viaje INT not null,
+FOREIGN KEY (Id_Alumno) REFERENCES Alumnos(ID_Alumno), 
+FOREIGN KEY (Id_Ruta) REFERENCES Rutas(ID_Ruta), 
+FOREIGN KEY (Id_Conductor) REFERENCES Conductores(ID_Conductor),
+FOREIGN KEY (Id_Autobuses) REFERENCES Autobuses (ID_Autobuses),
+FOREIGN KEY (Id_detalle_viaje) REFERENCES detalle_viaje (ID_detalle_viaje)
+);
+
+
+INSERT INTO Autobuses (Marca,Modelo,Estado_Autobus,Matricula_Autobus) VALUES
+('Volvo', '9700', 'Nuevo', 'PQR-678'),
+('Volvo', '9700', 'Nuevo', 'STU-901'),
+('Volvo', '9700', 'Viejo', 'VWX-234'),
+('Mercedes-Benz', 'Citaro', 'Medio nuevo', 'YZA-567'),
+('Mercedes-Benz', 'Citaro', 'Nuevo', 'BCD-890'),
+('Scania', 'Touring', 'Medio nuevo', 'EFG-123'),
+('Scania', 'Touring', 'Nuevo', 'HIJ-456'),
+('MAN', 'Lions Coach', 'Viejo', 'KLM-789'),
+('Scania', 'Touring', 'Medio nuevo', 'NOP-012'),
+('Irizar', 'i8', 'Nuevo', 'QRS-345')
+;
+
+INSERT INTO Conductores (Nombre_Condu,Paterno_Condu,Materno_Condu) VALUES
+('Juan', 'García', 'López'),
+('Pedro', 'López', 'Martínez'),
+('Carlos', 'Martínez', 'Sánchez'),
+('Andrés', 'Sánchez', 'Ramírez'),
+('Luis', 'Ramírez', 'Vargas'),
+('Juan', 'Rodríguez', 'Hernández'),
+('Pedro', 'Hernández', 'González'),
+('Juan', 'González', 'Pérez'),
+('Luis', 'Pérez', 'Flores'),
+('Josue', 'Flores', 'Silva')
+;
+
+INSERT INTO Alumnos (Nombre_Alu,Paterno_Alu,Materno_Alu,Numero_contacto,Matricula) VALUES
+('Juan', 'García', 'López', '555-123-4567', '014400001'),
+('María', 'Rodríguez', 'Hernández', '555-987-6543', '014400002'),
+('Pedro', 'López', 'Martínez', '555-234-5678', '014400003'),
+('Laura', 'Hernández', 'González', '555-876-5432', '014400004'),
+('Carlos', 'Martínez', 'Sánchez', '555-345-6789', '014400005'),
+('Sofía', 'González', 'Pérez', '555-765-4321', '014400006'),
+('Andrés', 'Sánchez', 'Ramírez', '555-456-7890', '014400007'),
+('Ana', 'Pérez', 'Flores', '555-654-3210', '014400008'),
+('Luis', 'Ramírez', 'Vargas', '555-567-8901', '014400009'),
+('Diana', 'Flores', 'Silva', '555-321-0987', '014400010')
+;
+
+INSERT INTO Rutas (Origen,Destino,Tipo) VALUES
+('Universidad La Salle', 'Hacienda Blanca', 'Foránea'),
+('Módulo Azul', 'Universidad La Salle', 'Local'),
+('Universidad La Salle', '8 Regiones', 'Local'),
+('San Sebastian Etla', 'Universidad La Salle', 'Foránea'),
+('Universidad La Salle', 'San Felipe', 'Local'),
+('Universidad La Salle', 'Soriana Reforma', 'Local'),
+('Ocotlán', 'Universidad La Salle', 'Foránea'),
+('Universidad La Salle', 'Plaza Bella', 'Local'),
+('Universidad La Salle', 'Zimatlán', 'Foránea'),
+('Tlacolula', 'Universidad La Salle', 'Foránea')
+;
+
+INSERT INTO detalle_viaje (Hora_Salida,Hora_Llegada) VALUES
+('15:15', '16:30'),
+('05:50', '06:45'),
+('15:15', '16:15'),
+('05:30', '06:20'),
+('16:45', '17:30'),
+('16:45', '17:45'),
+('05:40', '06:30'),
+('16:45', '17:45'),
+('13:15', '14:00'),
+('05:30', '06:40')
+;
+
+INSERT INTO Viajes_Escolares (Precio,Id_Alumno,Id_Ruta,Id_Conductor,Id_Autobuses,Id_detalle_viaje) VALUES
+(24, 1, 1, 1, 1, 1),
+(12, 2, 2, 2, 2, 2),
+(12, 3, 3, 3, 3, 3),
+(24, 4, 4, 4, 4, 4),
+(12, 5, 5, 5, 5, 5),
+(12, 6, 6, 6, 6, 6),
+(24, 7, 7, 7, 7, 7),
+(12, 8, 8, 8, 8, 8),
+(24, 9, 9, 9, 9, 9),
+(24, 10, 10, 10, 10, 10)
+;
